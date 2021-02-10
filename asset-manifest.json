@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/sorting-game/static/css/main.3e8f644c.chunk.css",
-    "main.js": "/sorting-game/static/js/main.4a6414f6.chunk.js",
-    "main.js.map": "/sorting-game/static/js/main.4a6414f6.chunk.js.map",
+    "main.js": "/sorting-game/static/js/main.7d8b873c.chunk.js",
+    "main.js.map": "/sorting-game/static/js/main.7d8b873c.chunk.js.map",
     "runtime-main.js": "/sorting-game/static/js/runtime-main.be9562f7.js",
     "runtime-main.js.map": "/sorting-game/static/js/runtime-main.be9562f7.js.map",
     "static/js/2.426614ec.chunk.js": "/sorting-game/static/js/2.426614ec.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.be9562f7.js",
     "static/js/2.426614ec.chunk.js",
     "static/css/main.3e8f644c.chunk.css",
-    "static/js/main.4a6414f6.chunk.js"
+    "static/js/main.7d8b873c.chunk.js"
   ]
 }
