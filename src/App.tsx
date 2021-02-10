@@ -85,7 +85,6 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={logSolution}>Cheat</button>
       <button onClick={reset}>Reset</button>
       {numbersSorted ? 
         <button onClick={reset}>New Game</button>
