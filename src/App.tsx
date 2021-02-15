@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Log from './components/Log';
 import NumberSelector from './components/NumberSelector';
-import { isSorted, randElement, reverseUpTo, shuffle } from './helpers/helpers';
-import { puzzle } from './helpers/puzzle';
+import { getShuffledNumArray, isSorted, randElement, reverseUpTo, shuffle } from './helpers/helpers';
 import { getHints, solver } from './helpers/solver';
 import useEventListener from '@use-it/event-listener'
 
 const START_MESSAGE = 'Your goal is to sort the list. Click a number, and all numbers from the beginning to that point will be reversed. How many turns will it take?';
 
-const getShuffledNumbers = (): puzzle => shuffle([1,2,3,4,5,6,7,8,9]) as puzzle;
+const getNewPuzzle = (level: number) => getShuffledNumArray(level + 4);
 
 function App() {
+  const [level, setLevel] = useState(6);
   const [logs, setLogs] = useState<string[]>([START_MESSAGE]);
-  const [numArr, setNumArr] = useState<puzzle>(getShuffledNumbers());
+  const [numArr, setNumArr] = useState<number[]>(getNewPuzzle(level));
   const [winCount, setWinCount] = useState(0);
   const [turns, setTurns] = useState(0);
   const [maxLogs, setMaxLogs] = useState(25);
@@ -31,9 +31,18 @@ function App() {
     setLogs([...logs, s].slice(-1 * maxLogs));
   }
 
-  const reset = () => {
+  const incrementLevel = (levelChange: number): number => {
+    if (!levelChange) return level;
+    const newLevel = Math.max(1, level + levelChange);
+    setLevel(newLevel);
+    return newLevel;
+  }
+
+  const reset = (levelChange: number = 0) => {
+    const newLevel = incrementLevel(levelChange);
     setWinCount(winCount + 1);
-    const newPuzzle = getShuffledNumbers();
+    const newPuzzle = getNewPuzzle(newLevel);
+    console.log(newPuzzle, newLevel);
     setNumArr(newPuzzle);
     setTurns(0);
     const newPerfect = solver(newPuzzle).length;
@@ -48,10 +57,6 @@ function App() {
     addLog(`Attempt ${turns + 1}: ${numArr.join(', ')} - flip ${i+1}` + (goodMoves.includes(i) ? ' (Good move!)' : ''));
     setNumArr(newArr);
     setTurns(turns + 1);
-  }
-
-  const logSolution = () => {
-    console.log(solver(numArr));
   }
 
   function handleKeyDown(ev: KeyboardEvent) {
@@ -85,10 +90,11 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={reset}>Reset</button>
-      {numbersSorted ? 
-        <button onClick={reset}>New Game</button>
-        : <NumberSelector numArr={numArr} reverseUpTo={handleReverseUpTo} tryCount={turns + 1} goodMoves={goodMoves}></NumberSelector>
+      <button onClick={() => reset(-1)} disabled={level === 1}>-1</button>
+      <button onClick={() => reset()}>{numbersSorted ? 'New Game' : 'Reset'}</button>
+      <button onClick={() => reset(1)}>+1</button>
+      {!numbersSorted && 
+        <NumberSelector numArr={numArr} reverseUpTo={handleReverseUpTo} tryCount={turns + 1} goodMoves={goodMoves}></NumberSelector>
       }
       <Log logs={logs} maxLogs={maxLogs}></Log>
     </div>

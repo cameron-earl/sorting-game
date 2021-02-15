@@ -1,16 +1,20 @@
-import { isObjectEmpty, isSorted, reverse, reverseUpTo, reverseUpToEfficient, toFixedNumber } from './helpers';
-import { puzzle } from './puzzle';
+import { getSortedNumArray, isObjectEmpty, isSorted, reverse, reverseUpTo, reverseUpToEfficient, timeFn } from './helpers';
 
-type permutation = [puzzle, number[]];
-const solutionMap: {[key: string]: number[]} = {};
+type permutation = [number[], number[]];
+const solutionMapByLen: {[key: string]: number[]}[] = [];
 
-function populateEasySolutionMap() {
-  if (!isObjectEmpty(solutionMap)) return;
-  console.time('populateEasySolutionMap');
-  solutionMap['123456789'] = [];
-  const sorted: puzzle = [1,2,3,4,5,6,7,8,9];
+function populateEasySolutionMap(len: number = 5) {
+  if (!solutionMapByLen[len]) {
+    solutionMapByLen[len] = {}
+  } else {
+    if (!isSolutionMapEmpty(len)) return;
+  }
+  const solutionMap = solutionMapByLen[len];
+  console.time(`populateEasySolutionMap-${len}`);
+  const sorted: number[] = getSortedNumArray(len);
+  solutionMap[sorted.join('')] = [];
   const permutations: permutation[] = [[sorted, []]];
-  for (let i = 0; permutations[i][1].length < 6 /* alt: i < permutations.length */; i++) {
+  for (let i = 0; i < permutations.length/* && permutations[i][1].length < 7 */; i++) {
     for (let j = 1; j < sorted.length; j++) {
       const newArr = reverseUpToEfficient(permutations[i][0], j);
       const str = newArr.join('');
@@ -20,15 +24,17 @@ function populateEasySolutionMap() {
       solutionMap[str] = steps;
     }
   }
-  console.timeEnd('populateEasySolutionMap');
+  console.timeEnd(`populateEasySolutionMap-${len}`);
 };
 
 window.setTimeout(populateEasySolutionMap, 0);
 
-export const solver = (arr: puzzle): number[] => {
-  if (isObjectEmpty(solutionMap)) {
-    populateEasySolutionMap();
+export const solver = (arr: number[]): number[] => {
+  console.log('solver');
+  if (timeFn(isSolutionMapEmpty, arr.length)) {
+    populateEasySolutionMap(arr.length);
   }
+  const solutionMap = solutionMapByLen[arr.length];
 
   let solution: number[] | null = null;
   const permutations: permutation[] = [[arr, []]];
@@ -62,7 +68,7 @@ export const solver = (arr: puzzle): number[] => {
   throw new Error('Solver failed for ' + arr);
 }
 
-export const getHints = (arr: puzzle): {solution: number[], goodMoves: number[]} => {
+export const getHints = (arr: number[]): {solution: number[], goodMoves: number[]} => {
   const solution = solver(arr);
   const goodMoves: number[] = [];
   for (let i = 1; i < arr.length; i++) {
@@ -75,4 +81,9 @@ export const getHints = (arr: puzzle): {solution: number[], goodMoves: number[]}
     if (newSolution.length < solution.length) goodMoves.push(i);
   }
   return {solution, goodMoves};
+}
+
+const isSolutionMapEmpty = (len: number) => {
+  const sortedKey = getSortedNumArray(len).join('');
+  return !solutionMapByLen[len] || !solutionMapByLen[len][sortedKey];
 }

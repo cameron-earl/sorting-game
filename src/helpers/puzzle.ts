@@ -1,1 +1,0 @@
-export type puzzle = [number, number, number, number, number, number, number, number, number];

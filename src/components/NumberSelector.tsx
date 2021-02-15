@@ -1,9 +1,8 @@
 import React from 'react';
-import { puzzle } from '../helpers/puzzle';
 import styles from './NumberSelector.module.css';
 
 interface NumberSelectorProps {
-  numArr: puzzle;
+  numArr: number[];
   reverseUpTo: (i: number) => void;
   tryCount: number;
   goodMoves: number[];

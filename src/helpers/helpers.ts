@@ -1,4 +1,3 @@
-import { puzzle } from './puzzle';
 import SillyGooseError from './SillyGooseError';
 
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -13,7 +12,6 @@ export const shuffle = <T>(array: T[]): T[] => {
   return arr;
 }
 
-
 export const toFixedNumber = (num: number, digits: number): number => {
   var pow = Math.pow(10, digits);
   return Math.round(num*pow) / pow;
@@ -21,11 +19,11 @@ export const toFixedNumber = (num: number, digits: number): number => {
 
 export const roundToTwoDecimals = (n: number) => Math.round(n * 100) / 100;
 
-export const isSorted = (arr: puzzle): boolean => arr.every((e, i) => e === i+1);
+export const isSorted = (arr: number[]): boolean => arr.every((e, i) => e === i+1);
 
-export const reverseUpTo = (arr: puzzle, i: number): puzzle => [...arr.slice(0, i+1).reverse(), ...arr.slice(i+1)] as puzzle;
+export const reverseUpTo = (arr: number[], i: number): number[] => [...arr.slice(0, i+1).reverse(), ...arr.slice(i+1)];
 
-export const reverseUpToEfficient = (arr: puzzle, idx: number): puzzle => {
+export const reverseUpToEfficient = (arr: number[], idx: number): number[] => {
   const newArr = [];
   for (let i = idx; i >= 0; i--) {
     newArr.push(arr[i]);
@@ -33,12 +31,13 @@ export const reverseUpToEfficient = (arr: puzzle, idx: number): puzzle => {
   for (let i = idx + 1; i < arr.length; i++) {
     newArr.push(arr[i]);
   }
-  return newArr as puzzle;
+  return newArr;
 }
 
 export const reverse = <T>(array: T[]): T[] => array.slice().reverse();
 
 export const isObjectEmpty = (obj: Object) => {
+  console.count('isObjectEmpty');
   for(var i in obj) return false; 
   return true;
 }
@@ -51,3 +50,21 @@ export const randInt = (min: number = 0, max: number = 9): number => {
 };
 
 export const randElement = <T>(a: T[]): T => a[randInt(0, a.length - 1)];
+
+export const getSortedNumArray = (len: number): number[] => new Array(len).fill(0).map((n, i) => i + 1);
+
+export const getShuffledNumArray = (len: number): number[] => {
+  let arr: number[];
+  do {
+    arr = shuffle(getSortedNumArray(len));
+  } while (isSorted(arr))
+
+  return arr;
+}
+
+export const timeFn = (fn: Function, ...args: any[]): any => {
+  console.time(fn.name);
+  const result = fn(...args);
+  console.timeEnd(fn.name);
+  return result;
+}
