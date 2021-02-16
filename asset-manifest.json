@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/sorting-game/static/css/main.b8ff8831.chunk.css",
-    "main.js": "/sorting-game/static/js/main.d34f9181.chunk.js",
-    "main.js.map": "/sorting-game/static/js/main.d34f9181.chunk.js.map",
+    "main.css": "/sorting-game/static/css/main.49070b4a.chunk.css",
+    "main.js": "/sorting-game/static/js/main.c18247f3.chunk.js",
+    "main.js.map": "/sorting-game/static/js/main.c18247f3.chunk.js.map",
     "runtime-main.js": "/sorting-game/static/js/runtime-main.b070b3e7.js",
     "runtime-main.js.map": "/sorting-game/static/js/runtime-main.b070b3e7.js.map",
     "static/js/2.360dcea8.chunk.js": "/sorting-game/static/js/2.360dcea8.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.8a8e21db.chunk.js": "/sorting-game/static/js/3.8a8e21db.chunk.js",
     "static/js/3.8a8e21db.chunk.js.map": "/sorting-game/static/js/3.8a8e21db.chunk.js.map",
     "index.html": "/sorting-game/index.html",
-    "static/css/main.b8ff8831.chunk.css.map": "/sorting-game/static/css/main.b8ff8831.chunk.css.map",
+    "static/css/main.49070b4a.chunk.css.map": "/sorting-game/static/css/main.49070b4a.chunk.css.map",
     "static/js/2.360dcea8.chunk.js.LICENSE.txt": "/sorting-game/static/js/2.360dcea8.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.b070b3e7.js",
     "static/js/2.360dcea8.chunk.js",
-    "static/css/main.b8ff8831.chunk.css",
-    "static/js/main.d34f9181.chunk.js"
+    "static/css/main.49070b4a.chunk.css",
+    "static/js/main.c18247f3.chunk.js"
   ]
 }
