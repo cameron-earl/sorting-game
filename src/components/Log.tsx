@@ -22,7 +22,11 @@ function Log(props: LogProps) {
 
   const getOpacity = (i: number): number | '' => (i >= currentFadeCount) ? '' : calcOpacity(i);
 
-  const logElements = logs.map((l: string, i: number) => <div key={`${i}-log`} className={styles.log} style={{opacity: getOpacity(i)}}>{l}</div>).reverse();
+  const logElements = logs.map((l: string, i: number) => {
+    const opacity = getOpacity(i);
+    if (typeof opacity === 'number' && opacity < 0) return '';
+    return <div key={`${i}-log`} className={styles.log} style={{opacity: getOpacity(i)}}>{l}</div>
+  }).reverse();
 
   return <div>{logElements}</div>
 }
